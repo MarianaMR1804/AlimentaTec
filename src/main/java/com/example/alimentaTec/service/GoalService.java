@@ -3,10 +3,11 @@ package com.example.alimentaTec.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.example.alimentaTec.model.Goal;
-
 import com.example.alimentaTec.repository.GoalRepository;
 import jakarta.transaction.Transactional;
 
@@ -19,6 +20,13 @@ public class GoalService {
     public List<Goal> getAll(){
         return repo.findAll();
     }
+
+	public List<Goal> getAll(int page, int pageSize) {
+		PageRequest pageReq = PageRequest.of(page, pageSize);
+		Page<Goal> goal = repo.findAll(pageReq);
+		return goal.getContent();
+	}
+
 
     public void save(Goal goal) {
 		repo.save(goal);
