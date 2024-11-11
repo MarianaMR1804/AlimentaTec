@@ -19,6 +19,7 @@ public class Saucer {
     @JsonProperty("idSaucer")
     private int idSaucer;
 
+    
     @Size(min = 1, max = 255, message = "The name of contact most 255 characters")
     @Column(name = "nameSaucer")
     @JsonProperty("nameSaucer")
