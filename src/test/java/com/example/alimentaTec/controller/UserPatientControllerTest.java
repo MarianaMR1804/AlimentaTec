@@ -35,10 +35,14 @@ public class UserPatientControllerTest {
 	}
 
     @Test
-    public void getAllTest() throws Exception {
-        mvc.perform(get("/userPatients").accept(MediaType.APPLICATION_JSON)).andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(greaterThan(0))));
+    public void getAllPaginatedTest() throws Exception {
+        mvc.perform(get("/userPatients/pagination")
+                .param("page", "0")
+                .param("size", "10")
+                .accept(MediaType.APPLICATION_JSON))
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(greaterThan(0))));
     }
 
     @Test

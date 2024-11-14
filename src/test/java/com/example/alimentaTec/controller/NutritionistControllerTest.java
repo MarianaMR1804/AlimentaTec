@@ -36,22 +36,26 @@ public class NutritionistControllerTest {
 	}
 
     @Test
-    public void getAllTest() throws Exception {
-        mvc.perform(get("/nutritionist").accept(MediaType.APPLICATION_JSON)).andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(greaterThan(0))));
+    public void getAllPaginatedTest() throws Exception {
+        mvc.perform(get("/nutritionists/pagination")
+                .param("page", "0")
+                .param("size", "10")
+                .accept(MediaType.APPLICATION_JSON))
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(greaterThan(0))));
     }
 
     @Test
     public void getByIdTest() throws Exception {
-        mvc.perform(get("/nutritionist/2").accept(MediaType.APPLICATION_JSON)).andDo(print())
+        mvc.perform(get("/nutritionists/2").accept(MediaType.APPLICATION_JSON)).andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.idNutritionist", is(2)));
     }
 
     @Test
     public void getByIdNotFoundTest() throws Exception {
-        mvc.perform(get("/nutritionist/0").accept(MediaType.APPLICATION_JSON)).andDo(print())
+        mvc.perform(get("/nutritionists/0").accept(MediaType.APPLICATION_JSON)).andDo(print())
                 .andExpect(status().isNotFound())
                 .andExpect(content().string(containsString("The requested item is not registered")));
     }
