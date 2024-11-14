@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.alimentaTec.model.UserPatient;
 import com.example.alimentaTec.service.UserPatientService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -36,14 +36,14 @@ public class UserPatientController {
     @Autowired
     UserPatientService service;
 
-    @Operation(summary = "Get all patients")
-	@ApiResponse(responseCode = "200", description = "Found patient", content = {
-	@Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = UserPatient.class))) })
-
-    @GetMapping
-    public List<UserPatient> getAll() {
-        return service.getAll();
-    }
+  	@Operation(summary = "Get all accounts with pagination")
+	@GetMapping(value = "pagination", params = { "page", "size" })
+	public List<UserPatient> getAllPaginated(@RequestParam(value = "page", defaultValue = "0", required = false) int page,
+	
+	@RequestParam(value = "size", defaultValue = "10", required = false) int pageSize) {
+		List<UserPatient> userpatient = service.getAll(page, pageSize);
+		return userpatient;
+	}
 
     @Operation(summary = "Get a patient by his or her id")
 	@ApiResponses(value = {
