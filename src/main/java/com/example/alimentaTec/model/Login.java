@@ -1,9 +1,12 @@
 package com.example.alimentaTec.model;
 
+import com.example.alimentaTec.enums.RolNombre;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,8 +32,12 @@ public class Login {
     @JsonProperty("email")
     private String email;
     
-    
-    // Getters and Setters
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private RolNombre role;
+
+    // Getters y Setters existentes...
+
     
     public int getIdUser() {
         return idUser;
@@ -63,4 +70,12 @@ public class Login {
     public void setEmail(String email) {
         this.email = email;
     }  
+    // Getters and Setters
+    public RolNombre getRole() {
+        return role;
+    }
+
+    public void setRole(RolNombre role) {
+        this.role = role;
+    }
 }
