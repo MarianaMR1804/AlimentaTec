@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.alimentaTec.model.Goal;
 import com.example.alimentaTec.service.GoalService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -36,13 +36,16 @@ public class GoalController {
 	@Autowired
 	private GoalService service;
 
-	@Operation(summary = "Get all Goal")
-	@ApiResponse(responseCode = "200", description = "Found Goal", content = {
-			@Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Goal.class))) })
-	@GetMapping
-	public List<Goal> getAll() {
-		return service.getAll();
+	@Operation(summary = "Get all accounts with pagination")
+	@GetMapping(value = "pagination", params = { "page", "size" })
+	public List<Goal> getAllPaginated(@RequestParam(value = "page", defaultValue = "0", required = false) int 
+	page,
+	
+	@RequestParam(value = "size", defaultValue = "10", required = false) int pageSize) {
+		List<Goal> goal = service.getAll(page, pageSize);
+		return goal;
 	}
+
 
 	@Operation(summary = "Get a Goal by his or her Id")
 	@ApiResponses(value = {
@@ -63,7 +66,7 @@ public class GoalController {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = Goal.class)) }),
 			@ApiResponse(responseCode = "400", description = "Invalid Goal", content = @Content),
 			@ApiResponse(responseCode = "404", description = "Goal not found", content = @Content) })
-	@GetMapping("/{nameGoal}/name")
+	@GetMapping("/name/{nameGoal}")
 	public List<Goal> buscarNameSaucer(@PathVariable String nameGoal) {
 		return service.buscarPorNombre(nameGoal);
 	}

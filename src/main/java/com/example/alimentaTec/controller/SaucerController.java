@@ -19,7 +19,6 @@ import com.example.alimentaTec.model.Saucer;
 import com.example.alimentaTec.service.SaucerService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -54,14 +53,6 @@ public class SaucerController {
 		return new ResponseEntity<Saucer>(saucer, HttpStatus.OK);
 	}
 
-	@Operation(summary = "Get all Saucer")
-	@ApiResponse(responseCode = "200", description = "Found Saucer", content = {
-			@Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Saucer.class))) })
-
-	@GetMapping
-	public List<Saucer> getAll() {
-		return service.getAll();
-	}
 	
 	@Operation(summary = "Create saurce")
 	@PostMapping
@@ -87,7 +78,7 @@ public class SaucerController {
 			@ApiResponse(responseCode = "400", description = "Invalid Saucer", content = @Content),
 			@ApiResponse(responseCode = "404", description = "Saucer not found", content = @Content) })
 			
-	@GetMapping("/{nameSaucer}/name")
+	@GetMapping("/name/{nameSaucer}")
 	public List<Saucer> searchbyNameSaucer(@PathVariable String nameSaucer) {
 		return service.searchbyName(nameSaucer);
 	}
