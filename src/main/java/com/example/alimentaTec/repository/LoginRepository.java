@@ -8,4 +8,5 @@ import com.example.alimentaTec.model.Login;
 @Repository
 public interface LoginRepository extends JpaRepository<Login, Integer> {
     Optional<Login> findByUsername(String username);
+   
 }

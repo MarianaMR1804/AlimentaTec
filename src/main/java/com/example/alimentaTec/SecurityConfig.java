@@ -18,7 +18,7 @@ import com.example.alimentaTec.service.CustomUserDetailsService;
 public class SecurityConfig {
 
 
-       @Autowired
+    @Autowired
     private CustomUserDetailsService userDetailsService;
 
 
@@ -26,8 +26,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(
                 auth -> auth.requestMatchers( "/signin", "/signup").permitAll()
-                        .requestMatchers("/nutritionist/**").hasRole("NUTRIOLOGO")
-                        .requestMatchers("/patient/**").hasRole("PACIENTE")
+                        .requestMatchers("/userPatients/**", "/nutritionist/**").hasRole("NUTRIOLOGO")
+                        .requestMatchers("/journals/**", "/saucers/**", "/physicalActivities/**","/goals/**").hasRole("PACIENTE")
                         .anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults())
                 .rememberMe(Customizer.withDefaults())
