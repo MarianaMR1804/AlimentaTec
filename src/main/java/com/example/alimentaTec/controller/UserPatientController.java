@@ -18,7 +18,6 @@ import com.example.alimentaTec.model.UserPatient;
 import com.example.alimentaTec.service.UserPatientService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -36,14 +35,7 @@ public class UserPatientController {
     @Autowired
     UserPatientService service;
 
-    @Operation(summary = "Get all patients")
-	@ApiResponse(responseCode = "200", description = "Found patient", content = {
-	@Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = UserPatient.class))) })
-
-    @GetMapping
-    public List<UserPatient> getAll() {
-        return service.getAll();
-    }
+  
 
     @Operation(summary = "Get a patient by his or her id")
 	@ApiResponses(value = {
@@ -80,7 +72,7 @@ public class UserPatientController {
 			@Content(mediaType = "application/json", schema = @Schema(implementation = UserPatient.class)) }),
 			@ApiResponse(responseCode = "400", description = "Invalid Patient", content = @Content),
 			@ApiResponse(responseCode = "404", description = "User Patient not found", content = @Content) })
-	@GetMapping ("/{userName}/name")
+	@GetMapping ("/name/{userName}")
 	public List<UserPatient> searchbyUserName (@PathVariable String userName){
 	return service.searchbyUserName(userName);
 	}

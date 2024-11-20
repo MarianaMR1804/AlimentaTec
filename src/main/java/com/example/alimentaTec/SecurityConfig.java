@@ -25,9 +25,9 @@ public class SecurityConfig {
       @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(
-                auth -> auth.requestMatchers( "/signin", "/signup").permitAll()
-                        .requestMatchers("/userPatients/**", "/nutritionist/**").hasRole("NUTRIOLOGO")
-                        .requestMatchers("/journals/**", "/saucers/**", "/physicalActivities/**","/goals/**").hasRole("PACIENTE")
+                auth -> auth.requestMatchers( "/logins","/signin", "/signup").permitAll()
+                        .requestMatchers("/userPatient/**", "/nutritionist/**").hasRole("NUTRIOLOGO")
+                        .requestMatchers("/journals/**", "/saucer/**", "/physicalActivities/**","/goals/**").hasRole("PACIENTE")
                         .anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults())
                 .rememberMe(Customizer.withDefaults())

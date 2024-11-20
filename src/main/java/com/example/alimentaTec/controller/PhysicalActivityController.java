@@ -1,6 +1,8 @@
 package com.example.alimentaTec.controller;
 
+
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +14,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.alimentaTec.model.PhysicalActivity;
 import com.example.alimentaTec.service.PhysicalActivityService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -36,14 +38,16 @@ public class PhysicalActivityController {
 	@Autowired
 	private PhysicalActivityService service;
 
-	@Operation(summary = "Get all physical activities")
-	@ApiResponse(responseCode = "200", description = "Found Activity", content = {
-			@Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = PhysicalActivity.class))) })
-
-	@GetMapping
-	public List<PhysicalActivity> getAll() {
-		return service.getAll();
+	@Operation(summary = "Get all accounts with pagination")
+	@GetMapping(value = "pagination", params = { "page", "size" })
+	public List<PhysicalActivity> getAllPaginated(@RequestParam(value = "page", defaultValue = "0", required = false) int 
+	page,
+	
+	@RequestParam(value = "size", defaultValue = "10", required = false) int pageSize) {
+		List<PhysicalActivity> physicalActivities = service.getAll(page, pageSize);
+		return physicalActivities;
 	}
+
 
 	@Operation(summary = "Get a physical activities by his or her Id")
 	@ApiResponses(value = {

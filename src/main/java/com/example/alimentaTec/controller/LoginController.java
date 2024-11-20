@@ -1,6 +1,5 @@
 package com.example.alimentaTec.controller;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +18,6 @@ import com.example.alimentaTec.model.Login;
 import com.example.alimentaTec.service.LoginService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -40,14 +38,6 @@ public class LoginController {
 	@Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-	@Operation(summary = "Get all Login")
-	@ApiResponse(responseCode = "200", description = "Found Login", content = {
-			@Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Login.class))) })
-
-	@GetMapping
-	public List<Login> getAll() {
-		return service.getAll();
-	}
 
 	@Operation(summary = "Get a Login by his or her Id")
 	@ApiResponses(value = {

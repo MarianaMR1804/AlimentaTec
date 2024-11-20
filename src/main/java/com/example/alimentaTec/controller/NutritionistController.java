@@ -19,7 +19,6 @@ import com.example.alimentaTec.model.Nutritionist;
 import com.example.alimentaTec.service.NutritionistService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -38,13 +37,6 @@ public class NutritionistController {
 
 	NutritionistService service;
 
-	@Operation(summary = "Get all Nutritionist")
-	@ApiResponse(responseCode = "200", description = "Found Nutritionist", content = {
-			@Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Nutritionist.class))) })
-	@GetMapping
-	public List<Nutritionist> getAll() {
-		return service.getAll();
-	}
 
 	@Operation(summary = "Get a Nutritionist by his or her id")
 	@ApiResponses(value = {
@@ -81,7 +73,7 @@ public class NutritionistController {
 			@ApiResponse(responseCode = "400", description = "Invalid control number supplied", content = @Content),
 			@ApiResponse(responseCode = "404", description = "Nutritionist not found", content = @Content) })
 
-	@GetMapping ("/{nutritionistName}/name")
+	@GetMapping ("/name/{nutritionistName}")
 	public List<Nutritionist> searchbyNutritionistName (@PathVariable String nutritionistName){
 	return service.searchbyNutritionistName(nutritionistName);
 	}

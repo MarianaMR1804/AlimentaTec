@@ -3,6 +3,8 @@ package com.example.alimentaTec.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.example.alimentaTec.model.PhysicalActivity;
@@ -18,6 +20,13 @@ public class PhysicalActivityService {
     public List<PhysicalActivity> getAll(){
         return repo.findAll();
     }
+
+	public List<PhysicalActivity> getAll(int page, int pageSize) {
+		PageRequest pageReq = PageRequest.of(page, pageSize);
+		Page<PhysicalActivity> physicalActivity = repo.findAll(pageReq);
+		return physicalActivity.getContent();
+	}
+
 
     public void save(PhysicalActivity physicalActivity) {
 		repo.save(physicalActivity);
