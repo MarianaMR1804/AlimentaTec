@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.alimentaTec.model.UserPatient;
@@ -35,6 +36,15 @@ public class UserPatientController {
     @Autowired
     UserPatientService service;
 
+    @Operation(summary = "Get all accounts with pagination")
+	@GetMapping(value = "pagination", params = { "page", "size" })
+	public List<UserPatient> getAllPaginated(@RequestParam(value = "page", defaultValue = "0", required = false) int 
+	page,
+	
+	@RequestParam(value = "size", defaultValue = "10", required = false) int pageSize) {
+		List<UserPatient> userPatients = service.getAll(page, pageSize);
+		return userPatients;
+	}
   
 
     @Operation(summary = "Get a patient by his or her id")

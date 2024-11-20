@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -36,13 +37,19 @@ public class PhysicalActivityControllerTest {
     }
 
     @Test
-    public void getAllTest() throws Exception {
-        mvc.perform(get("/physicalActivities").accept(MediaType.APPLICATION_JSON)).andDo(print())
-                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(greaterThan(0))));
+    @WithMockUser(username = "maria_garcia", roles = {"PACIENTE"})
+    public void getAllPaginatedTest() throws Exception {
+        mvc.perform(get("/physicalActivities/pagination")
+                .param("page", "0")
+                .param("size", "10")
+                .accept(MediaType.APPLICATION_JSON))
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(greaterThan(0))));
     }
 
     @Test
+    @WithMockUser(username = "maria_garcia", roles = {"PACIENTE"})
     public void getByIdTest() throws Exception {
         mvc.perform(get("/physicalActivities/2").accept(MediaType.APPLICATION_JSON)).andDo(print())
                 .andExpect(status().isOk())
@@ -50,6 +57,7 @@ public class PhysicalActivityControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "maria_garcia", roles = {"PACIENTE"})
     public void getByIdNotFoundTest() throws Exception {
         mvc.perform(get("/physicalActivities/0").accept(MediaType.APPLICATION_JSON)).andDo(print())
                 .andExpect(status().isNotFound())

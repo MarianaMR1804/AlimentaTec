@@ -7,13 +7,15 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status; 
+
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -34,23 +36,33 @@ public class UserPatientControllerTest {
 		assertThat(controller).isNotNull();
 	}
 
+    
     @Test
-    public void getAllTest() throws Exception {
-        mvc.perform(get("/userPatients").accept(MediaType.APPLICATION_JSON)).andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(greaterThan(0))));
+    @WithMockUser(username = "juan_perez", roles = {"NUTRIOLOGO"})
+    public void getAllPaginatedTest() throws Exception {
+        mvc.perform(get("/userPatient/pagination")
+                .param("page", "0")
+                .param("size", "10")
+                .accept(MediaType.APPLICATION_JSON))
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(greaterThan(0))));
     }
+    
+
 
     @Test
+    @WithMockUser(username = "juan_perez", roles = {"NUTRIOLOGO"})
     public void getByIdTest() throws Exception {
-        mvc.perform(get("/userPatients/2").accept(MediaType.APPLICATION_JSON)).andDo(print())
+        mvc.perform(get("/userPatient/2").accept(MediaType.APPLICATION_JSON)).andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.userPatientId", is(2)));
     }
 
     @Test
+    @WithMockUser(username = "juan_perez", roles = {"NUTRIOLOGO"})
     public void getByIdNotFoundTest() throws Exception {
-        mvc.perform(get("/userPatients/0").accept(MediaType.APPLICATION_JSON)).andDo(print())
+        mvc.perform(get("/userPatient/0").accept(MediaType.APPLICATION_JSON)).andDo(print())
                 .andExpect(status().isNotFound())
                 .andExpect(content().string(containsString("The requested item is not registered")));
     }

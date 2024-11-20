@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -35,23 +36,30 @@ public class SaucerControllerTest {
         assertThat(controller).isNotNull();
     }
 
-    @Test
-    public void getAllTest() throws Exception {
-        mvc.perform(get("/saucers").accept(MediaType.APPLICATION_JSON)).andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(greaterThan(0))));
+     @Test
+    @WithMockUser(username = "maria_garcia", roles = {"PACIENTE"})
+    public void getAllPaginatedTest() throws Exception {
+        mvc.perform(get("/saucer/pagination")
+                .param("page", "0")
+                .param("size", "10")
+                .accept(MediaType.APPLICATION_JSON))
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(greaterThan(0))));
     }
 
     @Test
+    @WithMockUser(username = "maria_garcia", roles = {"PACIENTE"})
     public void getByIdTest() throws Exception {
-        mvc.perform(get("/saucers/2").accept(MediaType.APPLICATION_JSON)).andDo(print())
+        mvc.perform(get("/saucer/2").accept(MediaType.APPLICATION_JSON)).andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.idSaucer", is(2)));
     }
 
     @Test
+    @WithMockUser(username = "maria_garcia", roles = {"PACIENTE"})
     public void getByIdNotFoundTest() throws Exception {
-        mvc.perform(get("/saucers/0").accept(MediaType.APPLICATION_JSON)).andDo(print())
+        mvc.perform(get("/saucer/0").accept(MediaType.APPLICATION_JSON)).andDo(print())
                 .andExpect(status().isNotFound())
                 .andExpect(content().string(containsString("The requested item is not registered")));
     }

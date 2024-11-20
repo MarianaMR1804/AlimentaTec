@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.alimentaTec.model.Nutritionist;
@@ -37,6 +38,15 @@ public class NutritionistController {
 
 	NutritionistService service;
 
+	@Operation(summary = "Get all accounts with pagination")
+	@GetMapping(value = "pagination", params = { "page", "size" })
+	public List<Nutritionist> getAllPaginated(@RequestParam(value = "page", defaultValue = "0", required = false) int 
+	page,
+	
+	@RequestParam(value = "size", defaultValue = "10", required = false) int pageSize) {
+		List<Nutritionist> nutritionists = service.getAll(page, pageSize);
+		return nutritionists;
+	}
 
 	@Operation(summary = "Get a Nutritionist by his or her id")
 	@ApiResponses(value = {

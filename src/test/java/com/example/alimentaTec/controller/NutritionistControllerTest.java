@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -36,13 +37,19 @@ public class NutritionistControllerTest {
 	}
 
     @Test
-    public void getAllTest() throws Exception {
-        mvc.perform(get("/nutritionist").accept(MediaType.APPLICATION_JSON)).andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(greaterThan(0))));
+    @WithMockUser(username = "juan_perez", roles = {"NUTRIOLOGO"})
+    public void getAllPaginatedTest() throws Exception {
+        mvc.perform(get("/nutritionist/pagination")
+                .param("page", "0")
+                .param("size", "10")
+                .accept(MediaType.APPLICATION_JSON))
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(greaterThan(0))));
     }
 
     @Test
+    @WithMockUser(username = "juan_perez", roles = {"NUTRIOLOGO"})
     public void getByIdTest() throws Exception {
         mvc.perform(get("/nutritionist/2").accept(MediaType.APPLICATION_JSON)).andDo(print())
                 .andExpect(status().isOk())
@@ -50,6 +57,7 @@ public class NutritionistControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "juan_perez", roles = {"NUTRIOLOGO"})
     public void getByIdNotFoundTest() throws Exception {
         mvc.perform(get("/nutritionist/0").accept(MediaType.APPLICATION_JSON)).andDo(print())
                 .andExpect(status().isNotFound())
