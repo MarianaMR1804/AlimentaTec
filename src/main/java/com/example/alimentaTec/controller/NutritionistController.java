@@ -82,7 +82,7 @@ public class NutritionistController {
 			@ApiResponse(responseCode = "400", description = "Invalid control number supplied", content = @Content),
 			@ApiResponse(responseCode = "404", description = "Nutritionist not found", content = @Content) })
 
-	@GetMapping ("/{nutritionistName}/name")
+	@GetMapping ("/name/{nutritionistName}")
 	public List<Nutritionist> searchbyNutritionistName (@PathVariable String nutritionistName){
 	return service.searchbyNutritionistName(nutritionistName);
 	}

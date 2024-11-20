@@ -80,7 +80,7 @@ public class UserPatientController {
 			@Content(mediaType = "application/json", schema = @Schema(implementation = UserPatient.class)) }),
 			@ApiResponse(responseCode = "400", description = "Invalid Patient", content = @Content),
 			@ApiResponse(responseCode = "404", description = "User Patient not found", content = @Content) })
-	@GetMapping ("/{userName}/name")
+	@GetMapping ("/name/{userName}")
 	public List<UserPatient> searchbyUserName (@PathVariable String userName){
 	return service.searchbyUserName(userName);
 	}
