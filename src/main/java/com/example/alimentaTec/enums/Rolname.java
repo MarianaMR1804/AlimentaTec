@@ -1,6 +1,6 @@
 package com.example.alimentaTec.enums;
 
-public enum RolNombre {
+public enum Rolname {
    NUTRIOLOGO,
    PACIENTE
 } 

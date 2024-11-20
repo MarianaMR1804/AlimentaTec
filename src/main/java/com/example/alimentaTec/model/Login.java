@@ -1,6 +1,6 @@
 package com.example.alimentaTec.model;
 
-import com.example.alimentaTec.enums.RolNombre;
+import com.example.alimentaTec.enums.Rolname;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
@@ -34,7 +34,7 @@ public class Login {
     
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
-    private RolNombre role;
+    private Rolname role;
 
     // Getters y Setters existentes...
 
@@ -71,11 +71,11 @@ public class Login {
         this.email = email;
     }  
     // Getters and Setters
-    public RolNombre getRole() {
+    public Rolname getRole() {
         return role;
     }
 
-    public void setRole(RolNombre role) {
+    public void setRole(Rolname role) {
         this.role = role;
     }
 }

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.alimentaTec.enums.RolNombre;
+import com.example.alimentaTec.enums.Rolname;
 import com.example.alimentaTec.model.Login;
 import com.example.alimentaTec.repository.LoginRepository;
 
@@ -21,7 +21,7 @@ public class LoginService {
 	@Autowired
     private PasswordEncoder passwordEncoder;
 
-    public Login registrarUsuario(String username, String password, String email, RolNombre rol) {
+    public Login registrarUsuario(String username, String password, String email, Rolname rol) {
         
         // Validar que el usuario no exista
         if (repo.findByUsername(username).isPresent()) {
