@@ -1,7 +1,9 @@
 package com.example.alimentaTec.exception;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
@@ -10,65 +12,69 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 
 import org.springframework.web.bind.MethodArgumentNotValidException;
-
+import com.google.gson.Gson;
 @ControllerAdvice
 public class ExceptionHandlerAdvice {
 
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<String> handleException(NoSuchElementException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The requested item is not registered: ");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+        .body(new Gson().toJson("The requested item is not registered: "));
     }
-    // @ResponseStatus(HttpStatus.NOT_FOUND)
-    // public ResponseEntity<String> handleException(NoSuchElementException e) {
-    //     return  new ResponseEntity<>("The requested item is not registered", HttpStatus.NOT_FOUND);
-    // }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<String> handleException(DataIntegrityViolationException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("some of the columns are not well defined: ");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+        .body(new Gson().toJson("some of the columns are not well defined: "));
     }
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<String> handleException(HttpMessageNotReadableException e) {
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
-            .body("Error in the request format: ");
+            .body(new Gson().toJson("Error in the request format: "));
     }
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<String> handleException(EntityNotFoundException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The requested item is not registered: ");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Gson().toJson("The requested item is not registered: "));
     }
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<String> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        List<String> errors = ex.getBindingResult()
-                .getFieldErrors()
-                .stream()
-                .map(error -> error.getField() + ": " + error.getDefaultMessage())
-                .collect(Collectors.toList());
-        
-        return ResponseEntity
-            .status(HttpStatus.BAD_REQUEST)
-            .body("Validation errors: " + String.join(", ", errors));
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({ MethodArgumentNotValidException.class })
+    public ModelAndView handleValidationExceptions(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("exception", ex);
+        mav.addObject("errors", errors);
+        mav.setViewName("methodArgumentNotValid");
+        return mav;
     }
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
-            .body("Invalid value: ");
+            .body(new Gson().toJson("Invalid value: "));
     }
     @ExceptionHandler(TransientPropertyValueException.class)
     public ResponseEntity<String> handleTransientPropertyValueException(TransientPropertyValueException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Transient property value exception: ");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Gson().toJson("Transient property value exception: "));
     }
     @ExceptionHandler(SQLException.class)
     public ResponseEntity<String> handleSQLException(SQLException e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("SQL exception: ");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Gson().toJson("SQL exception: "));
     }
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<String> handleConstraintViolationException(ConstraintViolationException e) {
@@ -79,6 +85,6 @@ public class ExceptionHandlerAdvice {
         
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
-            .body("Validation errors: " + String.join(", ", errors));
+            .body(new Gson().toJson("Validation errors: " + String.join(", ", errors)));
     }
 }

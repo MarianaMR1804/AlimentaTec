@@ -1,0 +1,65 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+    journals: [Journal]
+    journalById(idJournal: Int): Journal
+}
+
+type Mutation {
+  createJournal(journal: JournalDTO): Journal
+}
+
+type Journal {
+    idJournal: ID!
+    saucer: Saucer!
+    physicalActivity: PhysicalActivity!
+    goal: Goal!
+    login: Login!
+}
+
+type Saucer {
+    idSaucer: ID!
+    nameSaucer: String!
+    category: String!
+    preparation: String!
+}
+
+type PhysicalActivity {
+    idActivity: ID!
+    nameActivity: String!
+    duration: String!
+    caloriesBurned: Int!
+    intensity: Intensity!
+}
+
+enum Intensity {
+    low
+    medium
+    high
+}
+
+type Goal {
+    idGoal: ID!
+    nameGoal: String!
+    descriptionGoal: String!
+    startGoal: Boolean!
+    endGoal: Boolean!
+    statusGoal: String!
+}
+
+type Login {
+    idUser: ID!
+    username: String!
+    email: String!
+    createdAt: Intensity
+}
+
+input JournalDTO {
+    idSaucer: Int!
+    idActivity: Int!
+    idGoal: Int!
+    idUser: Int!
+} 

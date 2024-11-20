@@ -44,30 +44,4 @@ public class Journal {
     @JoinColumn(name = "idUser")
     @JsonProperty("login")
     private Login login;
-
-    public Journal(){
-    }
-
-    public Journal(Integer idJournal, Saucer saucer, PhysicalActivity physicalActivity, Goal goal, Login login){
-        this.idJournal = idJournal;
-        this.saucer = saucer;
-        this.physicalActivity  = physicalActivity;
-        this.goal = goal;
-        this.login = login;
-    }
-
-    public Integer getIdJournal() {return idJournal;}
-    public void setIdJournal(Integer idJournal) {this.idJournal = idJournal;}
-
-    public Saucer getSaucer(){return saucer;}
-    public void setSaucer(Saucer saucer){this.saucer = saucer;}
-
-    public PhysicalActivity getPhysicalActivity() {return physicalActivity;}
-    public void setPhysicalActivity(PhysicalActivity physicalActivity) {this.physicalActivity = physicalActivity;}
-
-    public Goal getGoal() {return goal;}
-    public void setGoal(Goal goal) {this.goal = goal;}
-
-    public Login getLogin() {return login;}
-    public void setLogin(Login login) {this.login = login;}
 }

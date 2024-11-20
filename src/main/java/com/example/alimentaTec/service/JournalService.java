@@ -26,8 +26,8 @@ public class JournalService {
         return journal.getContent();
     }
 
-    public void save(Journal journal) {
-        repo.save(journal);
+    public Journal save(Journal journal) {
+        return repo.save(journal);
     }
 
     public Journal getIdJournal(Integer idJournal) {
@@ -37,4 +37,5 @@ public class JournalService {
     public void delete(Integer idJournal) {
         repo.deleteById(idJournal);
     }
+    
 }
