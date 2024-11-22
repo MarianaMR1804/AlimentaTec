@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import com.example.alimentaTec.service.JournalService;
 import com.example.alimentaTec.model.Journal;
+import org.springframework.validation.annotation.Validated; // Importar Validated
+import jakarta.validation.Valid; // Importar Valid
+
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -25,6 +28,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+@Validated
 @RestController
 @RequestMapping("journals")
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT })
@@ -58,16 +62,15 @@ public class JournalController {
 
 	@Operation(summary = "Create a Journal")
 	@PostMapping
-	public ResponseEntity<?> register(@RequestBody Journal journal) {
+	public ResponseEntity<?> register(@Valid @RequestBody Journal journal) {
 		service.save(journal);
-		return new ResponseEntity<String>("Saved record", HttpStatus.OK);
+		return new ResponseEntity<String>("Saved record", HttpStatus.CREATED);
 	}
 
 	@Operation(summary = "Update a Journal")
 	@PutMapping("{idJournal}")
-	public ResponseEntity<?> update(@RequestBody Journal journal, @PathVariable Integer idJournal) {
-
-		Journal auxJournal = service.getIdJournal(idJournal);
+	public ResponseEntity<?> update(@Valid @RequestBody Journal journal, @PathVariable Integer idJournal) {
+		Journal auxJournal = service.getIdJournal(idJournal);	
 		journal.setIdJournal(auxJournal.getIdJournal());
 		service.save(journal);
 		return new ResponseEntity<String>("Updated record", HttpStatus.OK);

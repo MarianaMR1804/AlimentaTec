@@ -12,6 +12,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
+import lombok.Getter; // Importar Lombok
+import lombok.Setter; // Importar Lombok
+
+@Getter // Generar getters automáticamente
+@Setter // Generar setters automáticamente
 @Entity
 @Table(name = "journal")
 public class Journal {
@@ -21,30 +26,30 @@ public class Journal {
     @JsonProperty("idJournal")
     private Integer idJournal;
 
-    @NotNull(message = "Saucer cannot be null")
+    @NotNull(message = "Saucer cannot be null") // Validación para no estar vacío
     @ManyToOne
     @JoinColumn(name = "idSaucer")
     @JsonProperty("saucer")
     private Saucer saucer;
 
-    @NotNull(message = "Physical activity cannot be null")
+    @NotNull(message = "Physical activity cannot be null") // Validación para no estar vacío
     @ManyToOne
     @JoinColumn(name = "idActivity")
     @JsonProperty("physicalActivity")
     private PhysicalActivity physicalActivity;
 
-    @NotNull(message = "Goal cannot be null")
+    @NotNull(message = "Goal cannot be null") // Validación para no estar vacío
     @ManyToOne
     @JoinColumn(name = "idGoal")
     @JsonProperty("goal")
     private Goal goal;
 
-    @NotNull(message = "User cannot be null")
+    @NotNull(message = "User cannot be null") // Validación para no estar vacío
     @ManyToOne
     @JoinColumn(name = "idUser")
     @JsonProperty("login")
     private Login login;
-
+    
     public Journal(){
     }
 

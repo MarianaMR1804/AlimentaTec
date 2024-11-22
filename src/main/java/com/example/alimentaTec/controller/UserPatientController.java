@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
 
 import com.example.alimentaTec.model.UserPatient;
 import com.example.alimentaTec.service.UserPatientService;
@@ -24,8 +25,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 
 
+@Validated
 @RestController
 @RequestMapping("userPatient")
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
@@ -61,7 +64,7 @@ public class UserPatientController {
 
     @Operation(summary = "Register a patient")
     @PostMapping
-    public ResponseEntity<?> registrar(@RequestBody UserPatient userPatient) {
+    public ResponseEntity<?> registrar(@Valid @RequestBody UserPatient userPatient) {
         service.save(userPatient);
         return new ResponseEntity<String>("Saved record", HttpStatus.OK);
 
@@ -69,7 +72,7 @@ public class UserPatientController {
     
     @Operation(summary = "Update a patient")
     @PutMapping("{userPatientId}")
-    public ResponseEntity<?> update(@RequestBody UserPatient userPatient, @PathVariable Integer userPatientId) {
+    public ResponseEntity<?> update(@Valid @RequestBody UserPatient userPatient, @PathVariable Integer userPatientId) {
             UserPatient auxUserPatient = service.getByUserPatientId(userPatientId);
             userPatient.setUserPatientId(auxUserPatient.getUserPatientId());
             service.save(userPatient);

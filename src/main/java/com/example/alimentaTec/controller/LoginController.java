@@ -4,15 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.annotation.Validated; 
+import jakarta.validation.Valid; // Importar Valid
 
 import com.example.alimentaTec.model.Login;
 import com.example.alimentaTec.service.LoginService;
@@ -24,20 +18,18 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+@Validated // Habilitar validación en la clase
 @RestController
 @RequestMapping("logins")
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT })
-
 @Tag(name = "Logins", description = "Types of logins")
 public class LoginController {
 
 	@Autowired
 	private LoginService service;
 
-	
 	@Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-
+	private BCryptPasswordEncoder passwordEncoder;
 
 	@Operation(summary = "Get a Login by his or her Id")
 	@ApiResponses(value = {
@@ -47,23 +39,23 @@ public class LoginController {
 	@GetMapping("{idUser}")
 	public ResponseEntity<?> getByIdlogin(@PathVariable Integer idUser) {
 		Login login = service.getByIdLogin(idUser);
-		return new ResponseEntity<Login>(login, HttpStatus.OK);
+		return new ResponseEntity<>(login, HttpStatus.OK);
 	}
 
 	@Operation(summary = "Register a Login")
 	@PostMapping
-	public ResponseEntity<?> register(@RequestBody Login login) {
+	public ResponseEntity<?> register(@Valid @RequestBody Login login) { // Validar el objeto Login
 		login.setPasswordUser(passwordEncoder.encode(login.getPasswordUser()));
 		service.save(login);
-		return new ResponseEntity<String>("Saved record", HttpStatus.CREATED);
+		return new ResponseEntity<>("Saved record", HttpStatus.CREATED);
 	}
 
 	@Operation(summary = "Update a Login")
 	@PutMapping("{idUser}")
-	public ResponseEntity<?> update(@RequestBody Login login, @PathVariable Integer idUser) {
+	public ResponseEntity<?> update(@Valid @RequestBody Login login, @PathVariable Integer idUser) { // Validar el objeto Login
 		Login auxLogin = service.getByIdLogin(idUser);
 		login.setIdUser(auxLogin.getIdUser());
 		service.save(login);
-		return new ResponseEntity<String>("Updated record", HttpStatus.OK);
+		return new ResponseEntity<>("Updated record", HttpStatus.OK);
 	}
 }

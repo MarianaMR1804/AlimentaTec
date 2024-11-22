@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
 
 import com.example.alimentaTec.model.Goal;
 import com.example.alimentaTec.service.GoalService;
@@ -24,7 +25,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 
+@Validated
 @RestController
 @RequestMapping("goals")
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE,
@@ -76,7 +79,7 @@ public class GoalController {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = Goal.class)) }),
 			@ApiResponse(responseCode = "400", description = "Invalid Goal", content = @Content) })
 	@PostMapping
-	public ResponseEntity<?> register(@RequestBody Goal goal) {
+	public ResponseEntity<?> register(@Valid @RequestBody Goal goal) {
 		service.save(goal);
 		return new ResponseEntity<String>("Saved record", HttpStatus.OK);
 	}
@@ -86,7 +89,7 @@ public class GoalController {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = Goal.class)) }),
 			@ApiResponse(responseCode = "400", description = "Invalid Goal", content = @Content) })
 	@PutMapping("{idGoal}")
-	public ResponseEntity<?> update(@RequestBody Goal goal, @PathVariable Integer idGoal) {
+	public ResponseEntity<?> update(@Valid @RequestBody Goal goal, @PathVariable Integer idGoal) {
 		Goal auxGoal = service.getByIdGoal(idGoal);
 		goal.setIdGoal(auxGoal.getIdGoal());
 		service.save(goal);

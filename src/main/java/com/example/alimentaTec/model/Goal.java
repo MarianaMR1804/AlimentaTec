@@ -7,8 +7,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.Setter;
+import jakarta.validation.constraints.NotBlank; // Importa las anotaciones de validación
+import jakarta.validation.constraints.Size; // Importa las anotaciones de validación
 
-
+@Getter
+@Setter
 @Entity
 public class Goal {
     @Id
@@ -19,22 +24,31 @@ public class Goal {
 
     @Column(name = "nameGoal")
     @JsonProperty("nameGoal")
+    @NotBlank(message = "Name is mandatory") // Validación
+    @Size(min = 1, max = 50, message = "Name must be between 1 and 50 characters") // Validación
     private String nameGoal;
 
     @Column(name = "descriptionGoal")
     @JsonProperty("descriptionGoal")
+    @NotBlank(message = "description cannot be null")
+    @Size(max = 255, message = "Description must be at most 255 characters") // Validación
     private String descriptionGoal;
 
+    
+    @NotBlank(message = "startGoal cannot be null")
     @Column(name = "startGoal")
     @JsonProperty("startGoal")
     private boolean startGoal;
 
+    
+    @NotBlank(message = "endGoal cannot be null")
     @Column(name = "endGoal")
     @JsonProperty("endGoal")
     private boolean endGoal;
 
     @Column(name = "statusGoal")
     @JsonProperty("statusGoal")
+    @NotBlank(message = "Status is mandatory") // Validación
     private String statusGoal;
 
     // Getters and Setters
@@ -83,6 +97,18 @@ public class Goal {
     }
 
     public void setStatusGoal(String statusGoal) {
+        this.statusGoal = statusGoal;
+    }
+
+    public Goal() {
+        
+    }
+
+    public Goal(String nameGoal, String descriptionGoal, boolean startGoal, boolean endGoal, String statusGoal) {
+        this.nameGoal = nameGoal;
+        this.descriptionGoal = descriptionGoal;
+        this.startGoal = startGoal;
+        this.endGoal = endGoal;
         this.statusGoal = statusGoal;
     }
 
