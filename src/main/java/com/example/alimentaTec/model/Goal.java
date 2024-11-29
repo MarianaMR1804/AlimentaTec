@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 import jakarta.validation.constraints.NotBlank; // Importa las anotaciones de validación
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size; // Importa las anotaciones de validación
 
 @Getter
@@ -35,13 +36,13 @@ public class Goal {
     private String descriptionGoal;
 
     
-    @NotBlank(message = "startGoal cannot be null")
+    @NotNull(message = "startGoal cannot be null")
     @Column(name = "startGoal")
     @JsonProperty("startGoal")
     private boolean startGoal;
 
     
-    @NotBlank(message = "endGoal cannot be null")
+    @NotNull(message = "endGoal cannot be null")
     @Column(name = "endGoal")
     @JsonProperty("endGoal")
     private boolean endGoal;

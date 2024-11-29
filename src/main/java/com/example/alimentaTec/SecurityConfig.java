@@ -23,7 +23,8 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(
+        http.csrf().disable()
+            .authorizeHttpRequests(
                 auth -> auth.requestMatchers( "/logins","/signin", "/signup").permitAll()
                         .requestMatchers("/userPatient/**", "/nutritionist/**").hasRole("NUTRIOLOGO")
                         .requestMatchers("/journals/**", "/saucer/**", "/physicalActivities/**","/goals/**").hasRole("PACIENTE")

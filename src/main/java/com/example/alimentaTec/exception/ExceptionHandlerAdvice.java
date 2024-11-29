@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import org.hibernate.TransientPropertyValueException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -80,5 +81,12 @@ public class ExceptionHandlerAdvice {
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
             .body("Validation errors: " + String.join(", ", errors));
+    }
+
+    @ExceptionHandler(JsonParseException.class)
+    public ResponseEntity<String> handleJsonParseException(JsonParseException e) {
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body("Error al procesar el JSON: " + e.getMessage());
     }
 }

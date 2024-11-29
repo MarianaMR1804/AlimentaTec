@@ -14,12 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import com.example.alimentaTec.service.JournalService;
 import com.example.alimentaTec.model.Journal;
 import org.springframework.validation.annotation.Validated; // Importar Validated
 import jakarta.validation.Valid; // Importar Valid
-
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -74,12 +72,5 @@ public class JournalController {
 		journal.setIdJournal(auxJournal.getIdJournal());
 		service.save(journal);
 		return new ResponseEntity<String>("Updated record", HttpStatus.OK);
-	}
-
-	@Operation(summary = "Delete a Journal")
-	@DeleteMapping("{idJournal}")
-	public ResponseEntity<?> delete(@PathVariable Integer idJournal) {
-		service.delete(idJournal);
-		return new ResponseEntity<String>("Deleted record", HttpStatus.OK);
 	}
 }

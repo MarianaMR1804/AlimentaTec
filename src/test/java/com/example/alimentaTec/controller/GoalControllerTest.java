@@ -49,7 +49,7 @@ public class GoalControllerTest {
             .andExpect(status().isOk())
             .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(greaterThan(0))));
     }
-
+ 
     @Test
     @WithMockUser(username = "maria_garcia", roles = {"PACIENTE"})
     public void getByIdTest() throws Exception {
