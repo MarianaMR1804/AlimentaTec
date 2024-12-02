@@ -34,6 +34,8 @@ public class Login {
     
     @NotBlank(message = "Email cannot be blank")
     @Email(message = "Email should be valid")
+    @Pattern(regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$", 
+         message = "Email format must be valid (e.g., example@example.com)")
     @Column(name = "email")
     @JsonProperty("email")
     private String email;

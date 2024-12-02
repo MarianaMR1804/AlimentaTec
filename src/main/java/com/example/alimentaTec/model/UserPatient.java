@@ -29,50 +29,50 @@ public class UserPatient {
     @JsonProperty("userPatientId")
     private Integer userPatientId;
 
-    @NotBlank(message = "El nombre no puede estar vacío")
-    @Size(max = 15, message = "El nombre no puede exceder los 15 caracteres")
+    @NotBlank(message = "The name cannot be empty")
+    @Size(max = 15, message = "The name cannot exceed 15 characters")
     @Column(name = "userName", nullable = false)
     @JsonProperty("userName")
     private String userName;
 
-    @NotBlank(message = "El apellido paterno no puede estar vacío")
-    @Size(max = 20, message = "El apellido paterno no puede exceder los 20 caracteres")
+    @NotBlank(message = "The paternal surname cannot be empty")
+    @Size(max = 20, message = "The paternal surname cannot exceed 20 characters")
     @Column(name = "paternalSurname", nullable = false)
     @JsonProperty("paternalSurname")
     private String paternalSurname;
 
-    @NotBlank(message = "El apellido materno no puede estar vacío")
-    @Size(max = 20, message = "El apellido materno no puede exceder los 20 caracteres")
+    @NotBlank(message = "The maternal surname cannot be empty")
+    @Size(max = 20, message = "The maternal surname cannot exceed 20 characters")
     @Column(name = "maternalSurname", nullable = false)
     @JsonProperty("maternalSurname")
     private String maternalSurname;
 
-    @NotNull(message = "La edad no puede estar vacía")
-    @Positive(message = "La edad debe ser un número positivo")
+    @NotNull(message = "Age cannot be empty")
+    @Positive(message = "Age must be a positive number")
     @Column(name = "age", nullable = false)
     @JsonProperty("age")
     private int age;
 
-    @NotBlank(message = "El género no puede estar vacío")
-    @Size(max = 20, message = "El género no puede exceder los 20 caracteres")
+    @NotBlank(message = "Gender cannot be empty")
+    @Size(max = 20, message = "Gender cannot exceed 20 characters")
     @Column(name = "gender", nullable = false)
     @JsonProperty("gender")
     private String gender;
 
-    @NotNull(message = "La altura no puede estar vacía")
-    @Positive(message = "La altura debe ser un número positivo")
+    @NotNull(message = "Height cannot be empty")
+    @Positive(message = "Height must be a positive number")
     @Column(name = "height", nullable = false)
     @JsonProperty("height")
     private float height;
 
-    @NotNull(message = "El peso no puede estar vacío")
-    @Positive(message = "El peso debe ser un número positivo")
+    @NotNull(message = "Weight cannot be empty")
+    @Positive(message = "Weight must be a positive number")
     @Column(name = "weight", nullable = false)
     @JsonProperty("weight")
     private float weight;
 
-    @NotBlank(message = "El sufrimiento no puede estar vacío")
-    @Size(max = 50, message = "El sufrimiento no puede exceder los 50 caracteres")
+    @NotBlank(message = "Suffering cannot be empty")
+    @Size(max = 50, message = "Suffering cannot exceed 50 characters")
     @Column(name = "suffering", nullable = false)
     @JsonProperty("suffering")
     private String suffering;

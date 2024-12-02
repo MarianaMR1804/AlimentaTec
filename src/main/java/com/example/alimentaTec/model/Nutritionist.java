@@ -29,38 +29,38 @@ public class Nutritionist {
     @JsonProperty("idNutritionist")
     private Integer idNutritionist;
 
-    @NotBlank(message = "El nombre del nutricionista es obligatorio")
-    @Size(max = 100, message = "El nombre del nutricionista no puede exceder los 100 caracteres")
+    @NotBlank(message = "The nutritionist's name is required")
+    @Size(max = 100, message = "The nutritionist's name cannot exceed 100 characters")
     @Column(name ="nutritionistName")
     @JsonProperty("nutritionistName")
     private String nutritionistName;
 
-    @NotBlank(message = "El apellido paterno es obligatorio")
-    @Size(max = 100, message = "El apellido paterno no puede exceder los 100 caracteres")
+    @NotBlank(message = "The paternal surname is required")
+    @Size(max = 100, message = "The paternal surname cannot exceed 100 characters")
     @Column(name ="paternalSurnameN")
     @JsonProperty("paternalSurnameN")
     private String paternalSurnameN;
 
-    @NotBlank(message = "El apellido materno es obligatorio")
-    @Size(max = 100, message = "El apellido materno no puede exceder los 100 caracteres")
+    @NotBlank(message = "The maternal surname is required")
+    @Size(max = 100, message = "The maternal surname cannot exceed 100 characters")
     @Column(name ="maternalSurnameN")
     @JsonProperty("maternalSurnameN")
     private String maternalSurnameN;
 
-    @NotNull(message = "La edad es obligatoria")
-    @Positive(message = "La edad debe ser un número positivo")
+    @NotNull(message = "Age is required")
+    @Positive(message = "Age must be a positive number")
     @Column(name ="ageN")
     @JsonProperty("ageN")
     private int ageN;
 
-    @NotBlank(message = "El género es obligatorio")
-    @Size(max = 10, message = "El género no puede exceder los 10 caracteres")
+    @NotBlank(message = "Gender is required")
+    @Size(max = 10, message = "Gender cannot exceed 10 characters")
     @Column(name ="genderN")
     @JsonProperty("genderN")
     private String genderN;
 
-    @NotBlank(message = "El registro del nutricionista es obligatorio")
-    @Size(max = 50, message = "El registro del nutricionista no puede exceder los 50 caracteres")
+    @NotBlank(message = "The nutritionist's registration is required")
+    @Size(max = 50, message = "The nutritionist's registration cannot exceed 50 characters")
     @Column(name ="nutritionistRegistration")
     @JsonProperty("nutritionistRegistration")
     private String nutritionistRegistration;
