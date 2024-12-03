@@ -9,9 +9,8 @@ type Query {
 }
 
 type Mutation {
-    addJournal(journal: JournalDTO): Journal
-    createJournal( idActivity: Int!, idGoal: Int!,idSaucer: Int!, idUser: Int!): Journal!
-    deleteJournal(idJournal: ID!): Boolean!
+    createJournal(idActivity: Int!, idGoal: Int!, idSaucer: Int!, idUser: Int!): Journal!
+    updateJournal(idJournal: Int!, idSaucer: Int!, idActivity: Int!, idGoal: Int!, idUser: Int!): Journal!
 }
 
 type Journal {
