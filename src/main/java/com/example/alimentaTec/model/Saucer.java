@@ -1,5 +1,4 @@
 package com.example.alimentaTec.model;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
@@ -8,8 +7,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-
 @Entity
 @Table(name = "Saucer")
 public class Saucer {
@@ -19,18 +18,20 @@ public class Saucer {
     @JsonProperty("idSaucer")
     private int idSaucer;
 
-    
-    @Size(min = 1, max = 255, message = "The name of contact most 255 characters")
+    @NotBlank(message = "The name of the saucer is mandatory")
+    @Size(min = 1, max = 50, message = "The name of the saucer must be between 1 and 255 characters")
     @Column(name = "nameSaucer")
     @JsonProperty("nameSaucer")
     private String nameSaucer;
 
-    @Size(min = 1, max = 255, message = "The name of contact most 255 characters")
+    @NotBlank(message = "The category is mandatory")
+    @Size(min = 1, max = 55, message = "The category must be between 1 and 255 characters")
     @Column(name = "category")
     @JsonProperty("category")
     private String category;
 
-    @Size(min = 1, max = 255, message = "The name of contact most 255 characters")
+    @NotBlank(message = "The preparation is mandatory")
+    @Size(min = 1, max = 255, message = "The preparation must be between 1 and 255 characters")
     @Column(name = "preparation")
     @JsonProperty("preparation")
     private String preparation;

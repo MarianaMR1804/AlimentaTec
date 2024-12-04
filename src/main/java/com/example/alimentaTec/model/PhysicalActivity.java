@@ -37,6 +37,7 @@ public class PhysicalActivity {
     @JsonProperty("duration")
     private String duration;
 
+    @NotNull(message = "caloriesBurned cannot be null")
     @Column(name = "caloriesBurned")
     @JsonProperty("caloriesBurned")
     @PositiveOrZero(message = "Calories burned must be 0 or positive")
